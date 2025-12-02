@@ -1,0 +1,48 @@
+<?php
+
+declare(strict_types=1);
+
+namespace PhpCfdi\CsfSatScraper\Services;
+
+use PhpCfdi\CsfSatScraper\Exceptions\NetworkException;
+use PhpCfdi\CsfSatScraper\FormUtils;
+use PhpCfdi\CsfSatScraper\URL;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
+
+readonly class DocumentService
+{
+    public function __construct(
+        private ClientInterface $client
+    ) {
+    }
+
+    public function sendFinalForm(string $url, array $values): string
+    {
+        try {
+            $response = $this->client->request('POST', $url, [
+                'form_params' => $values,
+            ]);
+            return (string)$response->getBody();
+        } catch (GuzzleException $e) {
+            throw new NetworkException('Failed to send final form', 0, $e);
+        }
+    }
+
+    public function getFileContent(): string
+    {
+        try {
+            $response = $this->client->request('GET', URL::$file);
+            return (string)$response->getBody();
+        } catch (GuzzleException $e) {
+            throw new NetworkException('Failed to get file content', 0, $e);
+        }
+    }
+
+    public function downloadDocument(string $lastHtml): string
+    {
+        $finalForm = FormUtils::extractFinalForm($lastHtml);
+        $this->sendFinalForm($finalForm->getAction(), $finalForm->getFields());
+        return $this->getFileContent();
+    }
+}
