@@ -29,9 +29,6 @@ readonly class AuthenticationService
             $this->client->request('GET', '/nidp/app', [
                 'query' => [
                     'sid' => 1,
-                ],
-                'headers' => [
-                    RequestOptions::ALLOW_REDIRECTS => true,
                 ]
             ]);
         } catch (GuzzleException $e) {
