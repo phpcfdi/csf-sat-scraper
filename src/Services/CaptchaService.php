@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCfdi\CsfSatScraper\Services;
 
+use PhpCfdi\CsfSatScraper\Exceptions\CaptchaSourceNotFoundException;
 use PhpCfdi\ImageCaptchaResolver\CaptchaImage;
 use PhpCfdi\ImageCaptchaResolver\CaptchaResolverInterface;
 use Symfony\Component\DomCrawler\Crawler;
@@ -19,8 +20,12 @@ readonly class CaptchaService
     {
         $crawler = new Crawler($html);
         $captchaImageSrc = $crawler->filter('#divCaptcha img')->attr('src');
+        if ($captchaImageSrc === null) {
+            throw new CaptchaSourceNotFoundException('Captcha image not found in HTML');
+        }
         $image = CaptchaImage::newFromInlineHtml($captchaImageSrc);
         $solution = $this->captchaSolver->resolve($image);
+
         return $solution->getValue();
     }
 }

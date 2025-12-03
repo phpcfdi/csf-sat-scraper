@@ -38,7 +38,6 @@ readonly class SSOHandler
     public function handleSSOWorkflow(): string
     {
         $response = $this->client->request('GET', URL::$thrower, [
-            'allow_redirects' => true,
             'headers' => [
                 'Host' => 'wwwmat.sat.gob.mx'
             ]

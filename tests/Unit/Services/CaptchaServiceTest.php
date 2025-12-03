@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCfdi\CsfSatScraper\Tests\Unit\Services;
 
+use PhpCfdi\CsfSatScraper\Exceptions\CaptchaSourceNotFoundException;
 use PhpCfdi\CsfSatScraper\Services\CaptchaService;
 use PhpCfdi\ImageCaptchaResolver\CaptchaResolverInterface;
 use PhpCfdi\ImageCaptchaResolver\CaptchaAnswerInterface;
@@ -59,5 +60,18 @@ class CaptchaServiceTest extends TestCase
         $result = $service->resolveCaptchaFromHtml($html);
 
         $this->assertSame($expectedValue, $result);
+    }
+
+    public function testResolveCaptchaFromHtmlThrowsExceptionWhenCaptchaImageNotFound(): void
+    {
+        $mockResolver = $this->createMock(CaptchaResolverInterface::class);
+        $service = new CaptchaService($mockResolver);
+
+        $html = '<div id="divCaptcha"><img /></div>';
+
+        $this->expectException(CaptchaSourceNotFoundException::class);
+        $this->expectExceptionMessage('Captcha image not found in HTML');
+
+        $service->resolveCaptchaFromHtml($html);
     }
 }
