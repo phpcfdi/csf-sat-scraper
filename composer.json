@@ -9,6 +9,11 @@
             "email": "cesargnu29@gmail.com"
         }
     ],
+    "homepage": "https://github.com/phpcfdi/csf-sat-scraper",
+    "support": {
+        "issues": "https://github.com/phpcfdi/csf-sat-scraper/issues",
+        "source": "https://github.com/phpcfdi/csf-sat-scraper"
+    },
     "require": {
         "php": ">=8.2",
         "ext-curl": "*",
