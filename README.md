@@ -1,5 +1,17 @@
 # CSF SAT Scraper
 
+[![Source Code][badge-source]][source]
+[![Packagist PHP Version Support][badge-php-version]][php-version]
+[![Discord][badge-discord]][discord]
+[![Latest Version][badge-release]][release]
+[![Software License][badge-license]][license]
+[![Build Status][badge-build]][build]
+[![Reliability][badge-reliability]][reliability]
+[![Maintainability][badge-maintainability]][maintainability]
+[![Code Coverage][badge-coverage]][coverage]
+[![Violations][badge-violations]][violations]
+[![Total Downloads][badge-downloads]][downloads]
+
 Un scraper en PHP para descargar constancias de situación fiscal del SAT México.
 
 ### Instalación
@@ -137,3 +149,30 @@ Cesar Aguilera - cesargnu29@gmail.com
 - PhpCfdi por image-captcha-resolver
 - Comunidad de PHP por las herramientas
 
+[contributing]: https://github.com/phpcfdi/csf-sat-scraper/blob/main/CONTRIBUTING.md
+[changelog]: https://github.com/phpcfdi/csf-sat-scraper/blob/main/docs/CHANGELOG.md
+[todo]: https://github.com/phpcfdi/csf-sat-scraper/blob/main/docs/TODO.md
+
+[source]: https://github.com/phpcfdi/csf-sat-scraper
+[php-version]: https://packagist.org/packages/phpcfdi/csf-sat-scraper
+[discord]: https://discord.gg/aFGYXvX
+[release]: https://github.com/phpcfdi/csf-sat-scraper/releases
+[license]: https://github.com/phpcfdi/csf-sat-scraper/blob/main/LICENSE
+[build]: https://github.com/phpcfdi/csf-sat-scraper/actions/workflows/build.yml?query=branch:main
+[reliability]:https://sonarcloud.io/component_measures?id=phpcfdi_csf-sat-scraper&metric=Reliability
+[maintainability]: https://sonarcloud.io/component_measures?id=phpcfdi_csf-sat-scraper&metric=Maintainability
+[coverage]: https://sonarcloud.io/component_measures?id=phpcfdi_csf-sat-scraper&metric=Coverage
+[violations]: https://sonarcloud.io/project/issues?id=phpcfdi_csf-sat-scraper&resolved=false
+[downloads]: https://packagist.org/packages/phpcfdi/csf-sat-scraper
+
+[badge-source]: https://img.shields.io/badge/source-phpcfdi/csf--scraper-blue.svg?logo=github
+[badge-php-version]: https://img.shields.io/packagist/php-v/phpcfdi/csf-sat-scraper?logo=php
+[badge-discord]: https://img.shields.io/discord/459860554090283019?logo=discord
+[badge-release]: https://img.shields.io/github/release/phpcfdi/csf-sat-scraper.svg?logo=git
+[badge-license]: https://img.shields.io/github/license/phpcfdi/csf-sat-scraper.svg?logo=open-source-initiative
+[badge-build]: https://img.shields.io/github/actions/workflow/status/phpcfdi/csf-sat-scraper/build.yml?branch=main&logo=github-actions
+[badge-reliability]: https://sonarcloud.io/api/project_badges/measure?project=phpcfdi_csf-sat-scraper&metric=reliability_rating
+[badge-maintainability]: https://sonarcloud.io/api/project_badges/measure?project=phpcfdi_csf-sat-scraper&metric=sqale_rating
+[badge-coverage]: https://img.shields.io/sonar/coverage/phpcfdi_csf-sat-scraper/main?logo=sonarqubecloud&server=https%3A%2F%2Fsonarcloud.io
+[badge-violations]: https://img.shields.io/sonar/violations/phpcfdi_csf-sat-scraper/main?format=long&logo=sonarqubecloud&server=https%3A%2F%2Fsonarcloud.io
+[badge-downloads]: https://img.shields.io/packagist/dt/phpcfdi/csf-sat-scraper.svg?logo=packagist
