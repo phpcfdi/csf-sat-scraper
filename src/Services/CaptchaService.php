@@ -12,7 +12,7 @@ use Symfony\Component\DomCrawler\Crawler;
 readonly class CaptchaService
 {
     public function __construct(
-        private CaptchaResolverInterface $captchaSolver
+        private CaptchaResolverInterface $captchaSolver,
     ) {
     }
 
@@ -20,7 +20,7 @@ readonly class CaptchaService
     {
         $crawler = new Crawler($html);
         $captchaImageSrc = $crawler->filter('#divCaptcha img')->attr('src');
-        if ($captchaImageSrc === null) {
+        if (null === $captchaImageSrc) {
             throw new CaptchaSourceNotFoundException('Captcha image not found in HTML');
         }
         $image = CaptchaImage::newFromInlineHtml($captchaImageSrc);

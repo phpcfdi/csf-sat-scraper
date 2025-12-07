@@ -4,22 +4,20 @@ declare(strict_types=1);
 
 namespace PhpCfdi\CsfSatScraper\Services;
 
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use PhpCfdi\CsfSatScraper\Exceptions\InvalidCaptchaException;
 use PhpCfdi\CsfSatScraper\Exceptions\InvalidCredentialsException;
-use PhpCfdi\CsfSatScraper\Exceptions\LoginException;
 use PhpCfdi\CsfSatScraper\Exceptions\LoginPageNotLoadedException;
 use PhpCfdi\CsfSatScraper\Exceptions\NetworkException;
 use PhpCfdi\CsfSatScraper\URL;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\RequestOptions;
 
 readonly class AuthenticationService
 {
     public function __construct(
         private ClientInterface $client,
         private string $rfc,
-        private string $password
+        private string $password,
     ) {
     }
 
@@ -29,7 +27,7 @@ readonly class AuthenticationService
             $this->client->request('GET', '/nidp/app', [
                 'query' => [
                     'sid' => 1,
-                ]
+                ],
             ]);
         } catch (GuzzleException $e) {
             throw new NetworkException('Failed to initialize login session', 0, $e);
@@ -107,7 +105,7 @@ readonly class AuthenticationService
                 'headers' => [
                     'Host' => 'login.siat.sat.gob.mx',
                     'Referer' => 'https://login.siat.sat.gob.mx/nidp/app/login?id=ptsc-ciec&sid=1&option=credential&sid=1',
-                ]
+                ],
             ]);
 
             $html = (string)$response->getBody();

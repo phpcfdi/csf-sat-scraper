@@ -52,4 +52,4 @@ return (new PhpCsFixer\Config())
             ->append([__FILE__])
             ->exclude(['vendor', 'tools', 'build']),
     )
-    ;
+;

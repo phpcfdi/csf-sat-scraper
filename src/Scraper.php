@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace PhpCfdi\CsfSatScraper;
 
+use GuzzleHttp\ClientInterface;
 use PhpCfdi\CsfSatScraper\Services\AuthenticationService;
 use PhpCfdi\CsfSatScraper\Services\CaptchaService;
 use PhpCfdi\CsfSatScraper\Services\DocumentService;
 use PhpCfdi\CsfSatScraper\Services\SSOHandler;
-use GuzzleHttp\ClientInterface;
 use PhpCfdi\ImageCaptchaResolver\CaptchaResolverInterface;
 
 readonly class Scraper
 {
     private AuthenticationService $authService;
+
     private CaptchaService $captchaService;
+
     private SSOHandler $ssoHandler;
+
     private DocumentService $documentService;
 
     public function __construct(

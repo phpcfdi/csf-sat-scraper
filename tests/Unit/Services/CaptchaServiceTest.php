@@ -6,8 +6,8 @@ namespace PhpCfdi\CsfSatScraper\Tests\Unit\Services;
 
 use PhpCfdi\CsfSatScraper\Exceptions\CaptchaSourceNotFoundException;
 use PhpCfdi\CsfSatScraper\Services\CaptchaService;
-use PhpCfdi\ImageCaptchaResolver\CaptchaResolverInterface;
 use PhpCfdi\ImageCaptchaResolver\CaptchaAnswerInterface;
+use PhpCfdi\ImageCaptchaResolver\CaptchaResolverInterface;
 use PHPUnit\Framework\TestCase;
 
 class CaptchaServiceTest extends TestCase

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace PhpCfdi\CsfSatScraper\Services;
 
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use PhpCfdi\CsfSatScraper\Exceptions\NetworkException;
 use PhpCfdi\CsfSatScraper\FormUtils;
 use PhpCfdi\CsfSatScraper\URL;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
 
 readonly class DocumentService
 {
     public function __construct(
-        private ClientInterface $client
+        private ClientInterface $client,
     ) {
     }
 

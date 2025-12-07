@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace PhpCfdi\CsfSatScraper\Services;
 
+use GuzzleHttp\ClientInterface;
 use PhpCfdi\CsfSatScraper\Exceptions\SATException;
 use PhpCfdi\CsfSatScraper\FormUtils;
 use PhpCfdi\CsfSatScraper\URL;
-use GuzzleHttp\ClientInterface;
 
 readonly class SSOHandler
 {
     public function __construct(
-        private ClientInterface $client
+        private ClientInterface $client,
     ) {
     }
 
@@ -39,8 +39,8 @@ readonly class SSOHandler
     {
         $response = $this->client->request('GET', URL::$thrower, [
             'headers' => [
-                'Host' => 'wwwmat.sat.gob.mx'
-            ]
+                'Host' => 'wwwmat.sat.gob.mx',
+            ],
         ]);
 
         $html = (string)$response->getBody();

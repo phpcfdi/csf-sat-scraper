@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace PhpCfdi\CsfSatScraper\Tests\Unit\Services;
 
-use PhpCfdi\CsfSatScraper\Services\DocumentService;
-use PhpCfdi\CsfSatScraper\URL;
-use PhpCfdi\CsfSatScraper\Exceptions\NetworkException;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
+use PhpCfdi\CsfSatScraper\Exceptions\NetworkException;
+use PhpCfdi\CsfSatScraper\Services\DocumentService;
+use PhpCfdi\CsfSatScraper\URL;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
 
 class DocumentServiceTest extends TestCase
 {
     private ClientInterface $mockClient;
+
     private DocumentService $service;
 
     protected function setUp(): void
@@ -58,10 +59,8 @@ class DocumentServiceTest extends TestCase
             ->with(
                 'POST',
                 $url,
-                $this->callback(function ($options) use ($formParams) {
-                    return isset($options['form_params'])
-                        && $options['form_params'] === $formParams;
-                })
+                $this->callback(fn ($options) => isset($options['form_params'])
+                        && $options['form_params'] === $formParams),
             )
             ->willReturn($mockResponse);
 
@@ -92,7 +91,7 @@ class DocumentServiceTest extends TestCase
             "endobj\n" .
             "% Constancia de Situación Fiscal - SAT\n" .
             "% RFC: XXXX000000XXX\n" .
-            "% Fecha: " . date('Y-m-d') . "\n";
+            '% Fecha: ' . date('Y-m-d') . "\n";
 
         $mockStream = $this->createMock(StreamInterface::class);
         $mockStream->method('__toString')->willReturn($expectedPdfContent);
@@ -117,20 +116,20 @@ class DocumentServiceTest extends TestCase
     public function testDownloadDocumentIntegration(): void
     {
         $lastHtml = <<<HTML
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head><title>Constancia de Situación Fiscal</title></head>
-<body>
-    <form id="formReimpAcuse" name="formReimpAcuse" method="post" 
-          action="https://rfcampc.siat.sat.gob.mx/PTSC/IdcSiat/IdcGeneraConstancia.jsf">
-        <input type="hidden" name="javax.faces.ViewState" value="j_id1:javax.faces.ViewState:0" />
-        <input type="hidden" name="formReimpAcuse" value="formReimpAcuse" />
-        <button id="formReimpAcuse:j_idt50" name="formReimpAcuse:j_idt50" 
-                type="submit">Generar Constancia</button>
-    </form>
-</body>
-</html>
-HTML;
+            <!DOCTYPE html>
+            <html xmlns="http://www.w3.org/1999/xhtml">
+            <head><title>Constancia de Situación Fiscal</title></head>
+            <body>
+                <form id="formReimpAcuse" name="formReimpAcuse" method="post"
+                      action="https://rfcampc.siat.sat.gob.mx/PTSC/IdcSiat/IdcGeneraConstancia.jsf">
+                    <input type="hidden" name="javax.faces.ViewState" value="j_id1:javax.faces.ViewState:0" />
+                    <input type="hidden" name="formReimpAcuse" value="formReimpAcuse" />
+                    <button id="formReimpAcuse:j_idt50" name="formReimpAcuse:j_idt50"
+                            type="submit">Generar Constancia</button>
+                </form>
+            </body>
+            </html>
+            HTML;
         $ajaxResponse = '<?xml version="1.0"?><partial-response><changes><update>OK</update></changes></partial-response>';
 
         $pdfContent = "%PDF-1.4\n% Constancia de Situación Fiscal";

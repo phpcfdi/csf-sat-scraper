@@ -4,23 +4,25 @@ declare(strict_types=1);
 
 namespace PhpCfdi\CsfSatScraper\Tests\Unit\Services;
 
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\ConnectException;
 use PhpCfdi\CsfSatScraper\Exceptions\InvalidCaptchaException;
 use PhpCfdi\CsfSatScraper\Exceptions\InvalidCredentialsException;
 use PhpCfdi\CsfSatScraper\Exceptions\LoginPageNotLoadedException;
 use PhpCfdi\CsfSatScraper\Exceptions\NetworkException;
 use PhpCfdi\CsfSatScraper\Services\AuthenticationService;
 use PhpCfdi\CsfSatScraper\URL;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\ConnectException;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
 
 class AuthenticationServiceTest extends TestCase
 {
     private ClientInterface $mockClient;
+
     private string $validRfc = 'XAXX010101000';
+
     private string $validPassword = 'testPassword123';
 
     protected function setUp(): void
@@ -242,7 +244,7 @@ class AuthenticationServiceTest extends TestCase
                 $expectedUrls = [
                     URL::$logoutSatellite,
                     URL::$closeSession,
-                    URL::$logout
+                    URL::$logout,
                 ];
 
                 $this->assertEquals($expectedUrls[$callCount - 1], $url);
@@ -261,7 +263,7 @@ class AuthenticationServiceTest extends TestCase
         $mockRequest = $this->createMock(RequestInterface::class);
         $connectException = new ConnectException(
             'Connection failed',
-            $mockRequest
+            $mockRequest,
         );
 
         $this->mockClient

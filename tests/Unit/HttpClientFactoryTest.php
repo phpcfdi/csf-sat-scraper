@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PhpCfdi\CsfSatScraper\Tests\Unit;
 
-use PhpCfdi\CsfSatScraper\HttpClientFactory;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\RequestOptions;
+use PhpCfdi\CsfSatScraper\HttpClientFactory;
 use PHPUnit\Framework\TestCase;
 
 class HttpClientFactoryTest extends TestCase

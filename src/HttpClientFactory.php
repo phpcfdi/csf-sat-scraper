@@ -21,7 +21,7 @@ class HttpClientFactory
         if (isset($options[RequestOptions::HEADERS])) {
             $mergedOptions[RequestOptions::HEADERS] = array_merge(
                 $defaultOptions[RequestOptions::HEADERS],
-                $options[RequestOptions::HEADERS]
+                $options[RequestOptions::HEADERS],
             );
         }
 
@@ -57,11 +57,11 @@ class HttpClientFactory
             ],
 
             RequestOptions::HEADERS => [
-                'User-Agent'      => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36',
-                'Accept'          => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36',
+                'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
                 'Accept-Language' => 'es-MX,es;q=0.9,en;q=0.7',
-                'Cache-Control'   => 'no-cache',
-                'Pragma'          => 'no-cache',
+                'Cache-Control' => 'no-cache',
+                'Pragma' => 'no-cache',
             ],
         ];
     }
@@ -69,7 +69,7 @@ class HttpClientFactory
     public static function getCriticalOptions(): array
     {
         return [
-            'base_uri' => URL::$base
+            'base_uri' => URL::$base,
         ];
     }
 
@@ -81,7 +81,7 @@ class HttpClientFactory
             return false;
         }
 
-        if (isset($options[RequestOptions::VERIFY]) && $options[RequestOptions::VERIFY] !== false) {
+        if (isset($options[RequestOptions::VERIFY]) && false !== $options[RequestOptions::VERIFY]) {
             return false;
         }
 
