@@ -6,6 +6,7 @@ namespace PhpCfdi\CsfSatScraper;
 
 class Headers
 {
+    /** @return array<string, string> */
     public static function getHeaders(string $secFetchSite = 'none'): array
     {
         return [

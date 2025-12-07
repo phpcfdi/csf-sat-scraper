@@ -9,6 +9,7 @@ use GuzzleHttp\Exception\ConnectException;
 use PhpCfdi\CsfSatScraper\Exceptions\NetworkException;
 use PhpCfdi\CsfSatScraper\Services\DocumentService;
 use PhpCfdi\CsfSatScraper\URL;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -16,7 +17,7 @@ use Psr\Http\Message\StreamInterface;
 
 class DocumentServiceTest extends TestCase
 {
-    private ClientInterface $mockClient;
+    private ClientInterface&MockObject $mockClient;
 
     private DocumentService $service;
 
@@ -59,8 +60,9 @@ class DocumentServiceTest extends TestCase
             ->with(
                 'POST',
                 $url,
-                $this->callback(fn ($options) => isset($options['form_params'])
-                        && $options['form_params'] === $formParams),
+                $this->callback(
+                    static fn (array $options) => isset($options['form_params']) && $options['form_params'] === $formParams,
+                ),
             )
             ->willReturn($mockResponse);
 

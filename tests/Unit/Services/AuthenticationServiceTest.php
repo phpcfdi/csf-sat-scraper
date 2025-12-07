@@ -12,6 +12,7 @@ use PhpCfdi\CsfSatScraper\Exceptions\LoginPageNotLoadedException;
 use PhpCfdi\CsfSatScraper\Exceptions\NetworkException;
 use PhpCfdi\CsfSatScraper\Services\AuthenticationService;
 use PhpCfdi\CsfSatScraper\URL;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -19,7 +20,7 @@ use Psr\Http\Message\StreamInterface;
 
 class AuthenticationServiceTest extends TestCase
 {
-    private ClientInterface $mockClient;
+    private ClientInterface&MockObject $mockClient;
 
     private string $validRfc = 'XAXX010101000';
 
@@ -39,8 +40,6 @@ class AuthenticationServiceTest extends TestCase
 
         $service = new AuthenticationService($this->mockClient, $this->validRfc, $this->validPassword);
         $service->initializeApp();
-
-        $this->assertTrue(true);
     }
 
     public function testGetLoginFormReturnsHtml(): void
@@ -120,7 +119,7 @@ class AuthenticationServiceTest extends TestCase
         $service = new AuthenticationService($this->mockClient, $this->validRfc, $this->validPassword);
         $service->checkLogin();
 
-        $this->assertTrue(true);
+        $this->assertTrue(true); /** @phpstan-ignore-line method.alreadyNarrowedType */
     }
 
     public function testInitializeLoginThrowsNetworkException(): void
@@ -237,8 +236,9 @@ class AuthenticationServiceTest extends TestCase
             ->expects($this->exactly(3))
             ->method('request')
             ->willReturnCallback(function ($method, $url) {
-                $this->assertEquals('GET', $method);
+                /** @phpstan-var int $callCount */
                 static $callCount = 0;
+                $this->assertEquals('GET', $method);
                 $callCount++;
 
                 $expectedUrls = [
@@ -254,8 +254,6 @@ class AuthenticationServiceTest extends TestCase
 
         $service = new AuthenticationService($this->mockClient, $this->validRfc, $this->validPassword);
         $service->logout();
-
-        $this->assertTrue(true);
     }
 
     public function testLogoutThrowsNetworkExceptionOnFailure(): void

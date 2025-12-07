@@ -38,6 +38,7 @@ class FormUtils
         $form = $crawler->filter('form#formReimpAcuse')->form();
 
         $actionUrl = $form->getUri();
+        /** @phpstan-var array<string, string> $params */
         $params = $form->getPhpValues();
 
         $buttonId = 'formReimpAcuse:j_idt50';

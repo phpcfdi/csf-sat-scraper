@@ -12,11 +12,11 @@ use PhpCfdi\CsfSatScraper\URL;
 
 readonly class DocumentService
 {
-    public function __construct(
-        private ClientInterface $client,
-    ) {
+    public function __construct(private ClientInterface $client)
+    {
     }
 
+    /** @phpstan-param mixed[] $values */
     public function sendFinalForm(string $url, array $values): string
     {
         try {
@@ -33,7 +33,7 @@ readonly class DocumentService
     {
         try {
             $response = $this->client->request('GET', URL::$file);
-            return (string)$response->getBody();
+            return (string) $response->getBody();
         } catch (GuzzleException $e) {
             throw new NetworkException('Failed to get file content', 0, $e);
         }

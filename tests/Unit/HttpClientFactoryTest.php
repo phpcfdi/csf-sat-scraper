@@ -58,6 +58,7 @@ class HttpClientFactoryTest extends TestCase
 
     public function testGetDefaultOptionsIncludesRedirectSettings(): void
     {
+        /** @phpstan-var mixed[]&array{allow_redirects: array{max: int}} $options */
         $options = HttpClientFactory::getDefaultOptions();
 
         $this->assertArrayHasKey(RequestOptions::ALLOW_REDIRECTS, $options);
@@ -70,6 +71,7 @@ class HttpClientFactoryTest extends TestCase
 
         $this->assertArrayHasKey(RequestOptions::HEADERS, $options);
 
+        /** @phpstan-var array<string, string> $headers */
         $headers = $options[RequestOptions::HEADERS];
         $this->assertArrayHasKey('User-Agent', $headers);
         $this->assertArrayHasKey('Accept', $headers);

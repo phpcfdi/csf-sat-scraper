@@ -7,18 +7,20 @@ namespace PhpCfdi\CsfSatScraper\Tests\Unit\Services;
 use GuzzleHttp\ClientInterface;
 use PhpCfdi\CsfSatScraper\Exceptions\SATException;
 use PhpCfdi\CsfSatScraper\Services\SSOHandler;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
 class SSOHandlerTest extends TestCase
 {
-    private ClientInterface $mockClient;
+    private ClientInterface&MockObject $mockClient;
 
     private SSOHandler $service;
 
     protected function setUp(): void
     {
+
         $this->mockClient = $this->createMock(ClientInterface::class);
         $this->service = new SSOHandler($this->mockClient);
     }

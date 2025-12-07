@@ -13,7 +13,6 @@ class HeadersTest extends TestCase
     {
         $headers = Headers::getHeaders();
 
-        $this->assertIsArray($headers);
         $this->assertCount(15, $headers);
 
         $this->assertArrayHasKey('Accept', $headers);
@@ -22,7 +21,7 @@ class HeadersTest extends TestCase
         $this->assertArrayHasKey('Connection', $headers);
 
         foreach ($headers as $value) {
-            $this->assertIsString($value);
+            $this->assertIsString($value); /** @phpstan-ignore-line method.alreadyNarrowedType */
         }
     }
 

@@ -12,6 +12,7 @@ use GuzzleHttp\RequestOptions;
 
 class HttpClientFactory
 {
+    /** @phpstan-param mixed[] $options */
     public static function create(array $options = []): ClientInterface
     {
         $defaultOptions = self::getDefaultOptions();
@@ -34,6 +35,7 @@ class HttpClientFactory
         ]);
     }
 
+    /** @phpstan-return mixed[] */
     public static function getDefaultOptions(): array
     {
         return [
@@ -57,6 +59,7 @@ class HttpClientFactory
         ];
     }
 
+    /** @phpstan-return mixed[] */
     public static function getCriticalOptions(): array
     {
         return [
@@ -64,6 +67,7 @@ class HttpClientFactory
         ];
     }
 
+    /** @phpstan-param mixed[] $options */
     public static function validateOptions(array $options): bool
     {
         $critical = self::getCriticalOptions();
