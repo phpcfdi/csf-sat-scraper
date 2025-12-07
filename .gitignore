@@ -8,9 +8,6 @@ coverage/
 phpunit.xml.local
 phpunit.xml
 
-# Build
-/build/
-
 # Tools
 /tools/
 
