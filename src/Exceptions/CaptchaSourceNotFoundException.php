@@ -8,5 +8,4 @@ use PhpCfdi\CsfSatScraper\Exceptions\SATException;
 
 class CaptchaSourceNotFoundException extends SATException
 {
-
 }
