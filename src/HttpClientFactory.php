@@ -15,16 +15,7 @@ class HttpClientFactory
     public static function create(array $options = []): ClientInterface
     {
         $defaultOptions = self::getDefaultOptions();
-
-        $mergedOptions = array_merge($defaultOptions, $options);
-
-        if (isset($options[RequestOptions::HEADERS])) {
-            $mergedOptions[RequestOptions::HEADERS] = array_merge(
-                $defaultOptions[RequestOptions::HEADERS],
-                $options[RequestOptions::HEADERS],
-            );
-        }
-
+        $mergedOptions = array_merge_recursive($defaultOptions, $options);
         return new Client($mergedOptions);
     }
 
