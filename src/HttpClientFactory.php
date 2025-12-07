@@ -71,9 +71,10 @@ class HttpClientFactory
     public static function validateOptions(array $options): bool
     {
         $critical = self::getCriticalOptions();
-
-        if (isset($options['base_uri']) && $options['base_uri'] !== $critical['base_uri']) {
-            return false;
+        foreach ($critical as $name => $value) {
+            if (isset($options[$name]) && $options[$name] !== $value) {
+                return false;
+            }
         }
 
         if (isset($options[RequestOptions::VERIFY]) && false !== $options[RequestOptions::VERIFY]) {
