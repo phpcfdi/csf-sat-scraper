@@ -25,8 +25,6 @@
         "guzzlehttp/guzzle": "^7.10",
         "symfony/dom-crawler": "^7.4 || ^8.0",
         "symfony/css-selector": "^7.4 || ^8.0",
-        "symfony/browser-kit": "^7.4 || ^8.0",
-        "symfony/http-client": "^7.4 || ^8.0",
         "phpcfdi/image-captcha-resolver": "^0.3.0"
     },
     "require-dev": {
