@@ -26,11 +26,6 @@ class CaptchaServiceTest extends TestCase
                 return $this->value;
             }
 
-            public function getImage()
-            {
-                return null;
-            }
-
             public function __toString(): string
             {
                 return $this->value;
