@@ -116,6 +116,8 @@ Descarga el documento:
 4. Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abre un Pull Request
 
+Revisa la [guía de contribución](CONTRIBUTING.md).
+
 ### Ejecutar Tests Antes de PR
 
 ```bash
@@ -124,7 +126,7 @@ composer dev:test
 
 ## 📝 Licencia
 
-MIT License
+[MIT License](LICENSE)
 
 ## 👤 Autor
 
