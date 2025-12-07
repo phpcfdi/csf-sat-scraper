@@ -45,13 +45,10 @@ file_put_contents('constancia.pdf', $pdfContent);
 
 ```bash
 # Todos los tests
-composer test
+composer dev:test
 
 # Con formato legible
 vendor/bin/phpunit --testdox
-
-# Sin cobertura (más rápido)
-vendor/bin/phpunit --no-coverage
 
 # Test específico
 vendor/bin/phpunit tests/Unit/Services/CaptchaServiceTest.php
@@ -60,8 +57,8 @@ vendor/bin/phpunit tests/Unit/Services/CaptchaServiceTest.php
 ### Cobertura de Código
 
 ```bash
-composer test-coverage
-open coverage/index.html
+composer dev:coverage
+open build/coverage/html/index.html
 ```
 
 ## 🛠️ Desarrollo
@@ -80,7 +77,7 @@ open coverage/index.html
 
 ### Dependencias de Desarrollo
 
-- `phpunit/phpunit` ^10.0 - Framework de testing
+- `phpunit/phpunit` ^11.0 - Framework de testing
 
 ## 🔧 Servicios
 
@@ -122,7 +119,7 @@ Descarga el documento:
 ### Ejecutar Tests Antes de PR
 
 ```bash
-composer test
+composer dev:test
 ```
 
 ## 📝 Licencia
