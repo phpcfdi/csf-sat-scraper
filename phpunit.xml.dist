@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         cacheDirectory="build/phpunit"
          bootstrap="vendor/autoload.php"
          colors="true"
-         cacheDirectory=".phpunit.cache"
-         executionOrder="depends,defects"
-         requireCoverageMetadata="false"
-         beStrictAboutCoverageMetadata="true"
-         beStrictAboutOutputDuringTests="true"
-         failOnRisky="true"
-         failOnWarning="true">
+         displayDetailsOnAllIssues="true"
+         failOnAllIssues="true"
+>
+
+    <source>
+        <include>
+            <directory>src</directory>
+        </include>
+    </source>
+
     <testsuites>
         <testsuite name="Unit">
             <directory>tests/Unit</directory>
@@ -19,17 +23,4 @@
         </testsuite>
     </testsuites>
 
-    <source>
-        <include>
-            <directory>src</directory>
-        </include>
-    </source>
-
-    <coverage>
-        <report>
-            <html outputDirectory="coverage"/>
-            <text outputFile="php://stdout" showUncoveredFiles="true"/>
-        </report>
-    </coverage>
 </phpunit>
-
