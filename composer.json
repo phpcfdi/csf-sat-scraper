@@ -1,18 +1,8 @@
 {
     "name": "phpcfdi/csf-sat-scraper",
     "description": "Web Scraping para extraer la Constancia de situación Fiscal desde la página del SAT",
-    "type": "library",
     "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "PhpCfdi\\CsfSatScraper\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "PhpCfdi\\CsfSatScraper\\Tests\\": "tests/"
-        }
-    },
+    "type": "library",
     "authors": [
         {
             "name": "Cesar Aguilera",
@@ -23,12 +13,22 @@
         "php": ">=8.2",
         "ext-curl": "*",
         "guzzlehttp/guzzle": "^7.10",
-        "symfony/dom-crawler": "^7.4 || ^8.0",
+        "phpcfdi/image-captcha-resolver": "^0.3.0",
         "symfony/css-selector": "^7.4 || ^8.0",
-        "phpcfdi/image-captcha-resolver": "^0.3.0"
+        "symfony/dom-crawler": "^7.4 || ^8.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpCfdi\\CsfSatScraper\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhpCfdi\\CsfSatScraper\\Tests\\": "tests/"
+        }
     },
     "config": {
         "allow-plugins": {
@@ -36,24 +36,24 @@
         }
     },
     "scripts": {
-        "test": "phpunit",
-        "test-coverage": "phpunit --coverage-html coverage",
+        "dev:build": [
+            "@dev:fix-style",
+            "@test"
+        ],
         "dev:check-style": [
             "@php vendor/bin/phpcs --colors -sp"
         ],
         "dev:fix-style": [
             "@php vendor/bin/phpcbf --colors -sp"
         ],
-        "dev:build": [
-            "@dev:fix-style",
-            "@test"
-        ]
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-html coverage"
     },
     "scripts-descriptions": {
-        "test": "Run PHPUnit tests",
-        "test-coverage": "Run PHPUnit tests with code coverage",
+        "dev:build": "DEV: run dev:fix-style and test, run before pull request",
         "dev:check-style": "DEV: search for code style errors using phpcs",
         "dev:fix-style": "DEV: fix code style errors using phpcbf",
-        "dev:build": "DEV: run dev:fix-style and test, run before pull request"
+        "test": "Run PHPUnit tests",
+        "test-coverage": "Run PHPUnit tests with code coverage"
     }
 }

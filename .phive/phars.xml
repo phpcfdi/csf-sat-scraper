@@ -2,5 +2,5 @@
 <phive xmlns="https://phar.io/phive">
   <phar name="phpcs" version="^4.0.0" installed="4.0.0" location="./tools/phpcs" copy="false"/>
   <phar name="phpcbf" version="^4.0.0" installed="4.0.0" location="./tools/phpcbf" copy="false"/>
+  <phar name="composer-normalize" version="^2.48.2" installed="2.48.2" location="./tools/composer-normalize" copy="false"/>
 </phive>
-
