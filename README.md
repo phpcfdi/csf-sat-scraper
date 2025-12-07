@@ -65,7 +65,7 @@ open build/coverage/html/index.html
 
 ### Requisitos
 
-- PHP 8.4+
+- PHP 8.2+
 - Composer
 - Extensión cURL
 
