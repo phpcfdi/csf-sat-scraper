@@ -12,7 +12,7 @@ use PhpCfdi\CsfSatScraper\URL;
 
 readonly class DocumentService
 {
-    public function __construct(private ClientInterface $client)
+    public function __construct(public ClientInterface $client)
     {
     }
 

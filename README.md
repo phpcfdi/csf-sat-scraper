@@ -40,7 +40,7 @@ $client = HttpClientFactory::create([
 
 $captchaSolver = new ConsoleResolver();
 
-$scraper = new Scraper(
+$scraper = Scraper::create(
     $client,
     $captchaSolver,
     'TU_RFC',

@@ -15,9 +15,9 @@ use PhpCfdi\CsfSatScraper\URL;
 readonly class AuthenticationService
 {
     public function __construct(
-        private ClientInterface $client,
-        private string $rfc,
-        private string $password,
+        public ClientInterface $client,
+        public string $rfc,
+        public string $password,
     ) {
     }
 

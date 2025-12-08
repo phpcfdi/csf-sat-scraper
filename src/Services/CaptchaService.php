@@ -11,9 +11,8 @@ use Symfony\Component\DomCrawler\Crawler;
 
 readonly class CaptchaService
 {
-    public function __construct(
-        private CaptchaResolverInterface $captchaSolver,
-    ) {
+    public function __construct(public CaptchaResolverInterface $captchaSolver)
+    {
     }
 
     public function resolveCaptchaFromHtml(string $html): string

@@ -27,13 +27,16 @@ class ScraperTest extends TestCase
 
     public function testCanBeInstantiated(): void
     {
-        $scraper = new Scraper(
+        $scraper = Scraper::create(
             $this->mockClient,
             $this->mockCaptchaResolver,
             $this->testRfc,
             $this->testPassword,
         );
 
-        $this->assertSame($this->mockClient, $scraper->getClient());
+        $this->assertSame($this->mockClient, $scraper->client);
+        $this->assertSame($this->mockCaptchaResolver, $scraper->captchaService->captchaSolver);
+        $this->assertSame($this->testRfc, $scraper->authService->rfc);
+        $this->assertSame($this->testPassword, $scraper->authService->password);
     }
 }

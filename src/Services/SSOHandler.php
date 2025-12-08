@@ -11,9 +11,8 @@ use PhpCfdi\CsfSatScraper\URL;
 
 readonly class SSOHandler
 {
-    public function __construct(
-        private ClientInterface $client,
-    ) {
+    public function __construct(public ClientInterface $client)
+    {
     }
 
     public function handleSSOForms(string $html): string
