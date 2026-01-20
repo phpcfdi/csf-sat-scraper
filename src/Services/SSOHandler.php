@@ -19,16 +19,16 @@ readonly class SSOHandler
     {
         $form = FormUtils::extractForm($html);
 
-        $samlResponse = $this->client->request('POST', $form->getAction(), [
-            'form_params' => $form->getFields(),
+        $samlResponse = $this->client->request('POST', $form->action, [
+            'form_params' => $form->fields,
         ]);
 
         $html = (string)$samlResponse->getBody();
 
         $form = FormUtils::extractForm($html);
 
-        $response = $this->client->request('POST', $form->getAction(), [
-            'form_params' => $form->getFields(),
+        $response = $this->client->request('POST', $form->action, [
+            'form_params' => $form->fields,
         ]);
 
         return (string)$response->getBody();

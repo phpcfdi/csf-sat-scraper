@@ -42,7 +42,7 @@ readonly class DocumentService
     public function downloadDocument(string $lastHtml): string
     {
         $finalForm = FormUtils::extractFinalForm($lastHtml);
-        $this->sendFinalForm($finalForm->getAction(), $finalForm->getFields());
+        $this->sendFinalForm($finalForm->action, $finalForm->fields);
         return $this->getFileContent();
     }
 }

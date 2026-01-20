@@ -54,9 +54,7 @@ readonly class AuthenticationService
 
             $html = (string)$response->getBody();
             if (! str_contains($html, 'divCaptcha')) {
-                $exception = new LoginPageNotLoadedException('Unable to retrieve login form with captcha');
-                $exception->setHtml($html);
-                throw $exception;
+                throw new LoginPageNotLoadedException('Unable to retrieve login form with captcha', $html);
             }
 
             return $html;

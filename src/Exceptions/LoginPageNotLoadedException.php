@@ -8,13 +8,15 @@ class LoginPageNotLoadedException extends SATException
 {
     protected ?string $html = null;
 
-    public function setHtml(string $html): void
+    public function __construct(string $message, string $html)
     {
+        parent::__construct($message);
         $this->html = $html;
     }
 
     public function getHtml(): ?string
     {
+        // leave this getter since this is common on Exceptions
         return $this->html;
     }
 }
