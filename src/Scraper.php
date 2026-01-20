@@ -11,6 +11,7 @@ use PhpCfdi\CsfSatScraper\Services\CaptchaService;
 use PhpCfdi\CsfSatScraper\Services\DocumentService;
 use PhpCfdi\CsfSatScraper\Services\SSOHandler;
 use PhpCfdi\ImageCaptchaResolver\CaptchaResolverInterface;
+use Stringable;
 
 readonly class Scraper implements ScraperInterface
 {
@@ -47,7 +48,7 @@ readonly class Scraper implements ScraperInterface
         );
     }
 
-    public function download(): string
+    public function download(): Stringable
     {
         $this->authService->initializeApp();
         $loginHtmlForm = $this->authService->getLoginForm();

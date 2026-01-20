@@ -48,7 +48,7 @@ $scraper = Scraper::create(
 );
 
 $pdfContent = $scraper->download();
-file_put_contents('constancia.pdf', $pdfContent);
+file_put_contents('constancia.pdf', (string) $pdfContent);
 ```
 
 ## 🧪 Testing

@@ -107,7 +107,7 @@ class DocumentServiceTest extends TestCase
             ->with('GET', URL::$file)
             ->willReturn($mockResponse);
 
-        $result = $this->service->getFileContent();
+        $result = (string) $this->service->getFileContent();
 
         $this->assertSame($expectedPdfContent, $result);
         $this->assertStringStartsWith('%PDF-1.4', $result);
@@ -151,7 +151,7 @@ class DocumentServiceTest extends TestCase
             ->method('request')
             ->willReturnOnConsecutiveCalls($mockResponseAjax, $mockResponsePdf);
 
-        $result = $this->service->downloadDocument($lastHtml);
+        $result = (string) $this->service->downloadDocument($lastHtml);
 
         $this->assertSame($pdfContent, $result);
         $this->assertStringStartsWith('%PDF-1.4', $result);

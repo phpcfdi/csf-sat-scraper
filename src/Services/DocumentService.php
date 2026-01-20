@@ -9,6 +9,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use PhpCfdi\CsfSatScraper\Exceptions\NetworkException;
 use PhpCfdi\CsfSatScraper\FormUtils;
 use PhpCfdi\CsfSatScraper\URL;
+use Psr\Http\Message\StreamInterface;
 
 readonly class DocumentService
 {
@@ -29,17 +30,17 @@ readonly class DocumentService
         }
     }
 
-    public function getFileContent(): string
+    public function getFileContent(): StreamInterface
     {
         try {
             $response = $this->client->request('GET', URL::$file);
-            return (string) $response->getBody();
+            return $response->getBody();
         } catch (GuzzleException $e) {
             throw new NetworkException('Failed to get file content', 0, $e);
         }
     }
 
-    public function downloadDocument(string $lastHtml): string
+    public function downloadDocument(string $lastHtml): StreamInterface
     {
         $finalForm = FormUtils::extractFinalForm($lastHtml);
         $this->sendFinalForm($finalForm->action, $finalForm->fields);
