@@ -15,6 +15,8 @@ class URL
 
     public static string $closeSession = 'https://wwwmat.sat.gob.mx/app/seg/cerrarSesion';
 
+    public static string $login = 'https://login.siat.sat.gob.mx/nidp/app/login';
+
     public static string $logout = 'https://login.siat.sat.gob.mx/nidp/app/plogout';
 
     public static string $rfcampc = 'https://rfcampc.siat.sat.gob.mx';

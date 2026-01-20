@@ -46,8 +46,8 @@ readonly class AuthenticationService
                 ],
                 'headers' => [
                     'Content-Type' => 'application/x-www-form-urlencoded',
-                    'Origin' => 'https://login.siat.sat.gob.mx',
-                    'Referer' => 'https://login.siat.sat.gob.mx/nidp/app/login',
+                    'Origin' => URL::$base,
+                    'Referer' => URL::$login,
                 ],
                 'body' => '',
             ]);
@@ -75,8 +75,8 @@ readonly class AuthenticationService
                 ],
                 'headers' => [
                     'Content-Type' => 'application/x-www-form-urlencoded',
-                    'Origin' => 'https://login.siat.sat.gob.mx',
-                    'Referer' => 'https://login.siat.sat.gob.mx/nidp/app/login',
+                    'Origin' => URL::$base,
+                    'Referer' => URL::$login,
                 ],
                 'form_params' => [
                     'Ecom_User_ID' => $this->rfc,

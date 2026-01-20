@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\RequestOptions;
 use PhpCfdi\CsfSatScraper\HttpClientFactory;
+use PhpCfdi\CsfSatScraper\URL;
 use PHPUnit\Framework\TestCase;
 
 class HttpClientFactoryTest extends TestCase
@@ -23,7 +24,7 @@ class HttpClientFactoryTest extends TestCase
         $factory = new HttpClientFactory();
         $options = $factory->getDefaultOptions();
 
-        $this->assertEquals('https://login.siat.sat.gob.mx', $options['base_uri']);
+        $this->assertEquals(URL::$base, $options['base_uri']);
     }
 
     public function testGetDefaultOptionsIncludesTimeouts(): void
@@ -76,7 +77,7 @@ class HttpClientFactoryTest extends TestCase
     public function testValidateOptionsReturnsTrueForValidOptions(): void
     {
         $validOptions = [
-            'base_uri' => 'https://login.siat.sat.gob.mx',
+            'base_uri' => URL::$base,
             RequestOptions::VERIFY => false,
             RequestOptions::TIMEOUT => 60,
         ];
