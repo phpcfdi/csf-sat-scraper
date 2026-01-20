@@ -6,7 +6,20 @@
 
 ## Wishlist
 
-*Describa aquí en un nivel 3 una tarea deseada.*
+### Poder iniciar sesión usando la FIEL
+
+En la versión 1.0, solo se permite iniciar sesión usando el RFC y la clave CIEC.
+Sería de gran ayuda poder iniciar sesión utilizando la clave CIEC.
+
+### Agregar una prueba de sistema
+
+Agregar una prueba que permita comprobar el funcionamiento completo del proceso e integrarlo en los flujos
+de trabajo de GitHub. Con la protección necesaria para no comprometer la información personal.
+
+### Agregar un script de ejecución
+
+Permitir hacer la descarga de la CSF usando un comando de ejecución (CLI).
+Una vez con el script de ejecución, ver la posibilidad de incluir una imagen de Docker.
 
 ## Hechas
 

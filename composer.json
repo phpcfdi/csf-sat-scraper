@@ -1,6 +1,6 @@
 {
     "name": "phpcfdi/csf-sat-scraper",
-    "description": "Web Scraping para extraer la Constancia de situación Fiscal desde la página del SAT",
+    "description": "Scraper para descargar la Constancia de Situación Fiscal del SAT México",
     "license": "MIT",
     "type": "library",
     "authors": [

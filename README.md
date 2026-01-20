@@ -1,8 +1,7 @@
-# CSF SAT Scraper
+# phpcfdi/csf-sat-scraper
 
 [![Source Code][badge-source]][source]
-[![Packagist PHP Version Support][badge-php-version]][php-version]
-[![Discord][badge-discord]][discord]
+[![PHP Version][badge-php-version]][php-version]
 [![Latest Version][badge-release]][release]
 [![Software License][badge-license]][license]
 [![Build Status][badge-build]][build]
@@ -12,15 +11,26 @@
 [![Violations][badge-violations]][violations]
 [![Total Downloads][badge-downloads]][downloads]
 
-Un scraper en PHP para descargar constancias de situación fiscal del SAT México.
+> Scraper para descargar la Constancia de Situación Fiscal del SAT México.
 
-### Instalación
+:us: The documentation of this project is in Spanish, as this is the natural language for the intended audience.
 
-```bash
-composer install phpcfdi/csf-sat-scraper
+
+## Acerca de phpcfdi/csf-sat-scraper
+
+Esta herramienta se conecta usando [*Guzzle*](https://docs.guzzlephp.org/) como cliente HTTP a la página del SAT
+en México para descargar la Constancia de Situación Fiscal usando los datos de RFC y clave CIEC.
+
+Requiere un resolvedor de *Captcha*, para lo que se puede utilizar alguno de los que ya se encuentran implementados 
+en [`phpcfdi/image-captcha-resolver`](https://github.com/phpcfdi/image-captcha-resolver).
+
+## Instalación usando composer
+
+```shell
+composer require phpcfdi/csf-sat-scraper
 ```
 
-### Uso Básico
+## Uso Básico
 
 ```php
 <?php
@@ -51,103 +61,72 @@ $pdfContent = $scraper->download();
 file_put_contents('constancia.pdf', (string) $pdfContent);
 ```
 
-## 🧪 Testing
+**Importante:** El método `Scraper::download()` devuelve un objeto de tipo `Stringable`, por lo que se recomienda 
+siempre hacer la conversión de tipos explícita para obtener el contenido.
 
-### Ejecutar Tests
+## Información de servicios
 
-```bash
-# Todos los tests
-composer dev:test
-
-# Con formato legible
-vendor/bin/phpunit --testdox
-
-# Test específico
-vendor/bin/phpunit tests/Unit/Services/CaptchaServiceTest.php
-```
-
-### Cobertura de Código
-
-```bash
-composer dev:coverage
-open build/coverage/html/index.html
-```
-
-## 🛠️ Desarrollo
-
-### Requisitos
-
-- PHP 8.2+
-- Composer
-- Extensión cURL
-
-### Dependencias Principales
-
-- `guzzlehttp/guzzle` - Cliente HTTP
-- `symfony/dom-crawler` - Parsing de HTML
-- `phpcfdi/image-captcha-resolver` - Resolución de captchas
-
-### Dependencias de Desarrollo
-
-- `phpunit/phpunit` ^11.0 - Framework de testing
-
-## 🔧 Servicios
-
-### AuthenticationService
+### `AuthenticationService`
 
 Maneja todo el proceso de autenticación:
-- Inicialización de login
-- Obtención del formulario
-- Envío de credenciales
-- Verificación de sesión
 
-### CaptchaService
+- Inicialización de sesión.
+- Obtención del formulario.
+- Envío de credenciales.
+- Verificación de sesión.
+
+### `CaptchaService`
 
 Resuelve el captcha del SAT:
-- Extracción de imagen del HTML
-- Resolución con el solver configurado
 
-### SSOHandler
+- Extracción de imagen del HTML.
+- Resolución con el resolvedor configurado.
+
+### `SSOHandler`
 
 Gestiona el flujo SSO/SAML:
-- Procesamiento de formularios SAML
-- Manejo de iframes
-- Redirecciones SSO
 
-### DocumentService
+- Procesamiento de formularios SAML.
+- Manejo de IFRAMES.
+- Redirecciones SSO.
+
+### `DocumentService`
 
 Descarga el documento:
-- Envío de formulario final
-- Descarga del PDF
 
-## 🤝 Contribuir
+- Envío de formulario final.
+- Descarga del PDF.
 
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+## Soporte
 
-Revisa la [guía de contribución](CONTRIBUTING.md).
+Puedes obtener soporte abriendo un ticket en Github.
 
-### Ejecutar Tests Antes de PR
+Adicionalmente, esta librería pertenece a la comunidad [PhpCfdi](https://www.phpcfdi.com),
+así que puedes usar los canales oficiales de comunicación para obtener ayuda de la comunidad.
 
-```bash
-composer dev:test
-```
+## Compatibilidad
 
-## 📝 Licencia
+Esta librería se mantendrá compatible con al menos la versión con
+[soporte activo de PHP](https://www.php.net/supported-versions.php) más reciente.
 
-[MIT License](LICENSE)
+También utilizamos [Versionado Semántico 2.0.0](docs/SEMVER.md) por lo que puedes usar esta librería
+sin temor a romper tu aplicación.
 
-## 👤 Autor
+| Versión | PHP Mínima | Nota        |
+|---------|------------|-------------|
+| 1.0.0   | 8.2        | 2026-01-20  |
 
-Cesar Aguilera - cesargnu29@gmail.com
+## Contribuciones
 
-## 🙏 Agradecimientos
+Las contribuciones con bienvenidas. Por favor lee [CONTRIBUTING][] para más detalles
+y recuerda revisar el archivo de tareas pendientes [TODO][] y el archivo [CHANGELOG][].
 
-- PhpCfdi por image-captcha-resolver
-- Comunidad de PHP por las herramientas
+## Copyright and License
+
+Autor original: Cesar Aguilera `cesargnu29@gmail.com`.
+
+The `phpcfdi/csf-sat-scraper` tool is copyright © [PhpCfdi](https://www.phpcfdi.com/)
+and licensed for use under the MIT License (MIT). Please see [LICENSE][] for more information.
 
 [contributing]: https://github.com/phpcfdi/csf-sat-scraper/blob/main/CONTRIBUTING.md
 [changelog]: https://github.com/phpcfdi/csf-sat-scraper/blob/main/docs/CHANGELOG.md
@@ -155,7 +134,6 @@ Cesar Aguilera - cesargnu29@gmail.com
 
 [source]: https://github.com/phpcfdi/csf-sat-scraper
 [php-version]: https://packagist.org/packages/phpcfdi/csf-sat-scraper
-[discord]: https://discord.gg/aFGYXvX
 [release]: https://github.com/phpcfdi/csf-sat-scraper/releases
 [license]: https://github.com/phpcfdi/csf-sat-scraper/blob/main/LICENSE
 [build]: https://github.com/phpcfdi/csf-sat-scraper/actions/workflows/build.yml?query=branch:main
@@ -165,14 +143,13 @@ Cesar Aguilera - cesargnu29@gmail.com
 [violations]: https://sonarcloud.io/project/issues?id=phpcfdi_csf-sat-scraper&resolved=false
 [downloads]: https://packagist.org/packages/phpcfdi/csf-sat-scraper
 
-[badge-source]: https://img.shields.io/badge/source-phpcfdi/csf--scraper-blue.svg?logo=github
-[badge-php-version]: https://img.shields.io/packagist/php-v/phpcfdi/csf-sat-scraper?logo=php
-[badge-discord]: https://img.shields.io/discord/459860554090283019?logo=discord
-[badge-release]: https://img.shields.io/github/release/phpcfdi/csf-sat-scraper.svg?logo=git
-[badge-license]: https://img.shields.io/github/license/phpcfdi/csf-sat-scraper.svg?logo=open-source-initiative
+[badge-source]: https://img.shields.io/badge/source-phpcfdi/csf--sat--scraper-blue?logo=github
+[badge-php-version]: https://img.shields.io/packagist/dependency-v/phpcfdi/csf-sat-scraper/php?logo=php
+[badge-release]: https://img.shields.io/github/release/phpcfdi/csf-sat-scraper?logo=git
+[badge-license]: https://img.shields.io/github/license/phpcfdi/csf-sat-scraper?logo=open-source-initiative
 [badge-build]: https://img.shields.io/github/actions/workflow/status/phpcfdi/csf-sat-scraper/build.yml?branch=main&logo=github-actions
 [badge-reliability]: https://sonarcloud.io/api/project_badges/measure?project=phpcfdi_csf-sat-scraper&metric=reliability_rating
 [badge-maintainability]: https://sonarcloud.io/api/project_badges/measure?project=phpcfdi_csf-sat-scraper&metric=sqale_rating
 [badge-coverage]: https://img.shields.io/sonar/coverage/phpcfdi_csf-sat-scraper/main?logo=sonarqubecloud&server=https%3A%2F%2Fsonarcloud.io
 [badge-violations]: https://img.shields.io/sonar/violations/phpcfdi_csf-sat-scraper/main?format=long&logo=sonarqubecloud&server=https%3A%2F%2Fsonarcloud.io
-[badge-downloads]: https://img.shields.io/packagist/dt/phpcfdi/csf-sat-scraper.svg?logo=packagist
+[badge-downloads]: https://img.shields.io/packagist/dt/phpcfdi/csf-sat-scraper?logo=packagist
