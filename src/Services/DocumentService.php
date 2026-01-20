@@ -26,7 +26,7 @@ readonly class DocumentService
             ]);
             return (string)$response->getBody();
         } catch (ClientExceptionInterface $e) {
-            throw new NetworkException('Failed to send final form', 0, $e);
+            throw new NetworkException('Failed to send final form', $e);
         }
     }
 
@@ -36,7 +36,7 @@ readonly class DocumentService
             $response = $this->client->request('GET', URL::$file);
             return $response->getBody();
         } catch (ClientExceptionInterface $e) {
-            throw new NetworkException('Failed to get file content', 0, $e);
+            throw new NetworkException('Failed to get file content', $e);
         }
     }
 

@@ -30,7 +30,7 @@ readonly class AuthenticationService
                 ],
             ]);
         } catch (ClientExceptionInterface $e) {
-            throw new NetworkException('Failed to initialize login session', 0, $e);
+            throw new NetworkException('Failed to initialize login session', $e);
         }
     }
 
@@ -59,7 +59,7 @@ readonly class AuthenticationService
 
             return $html;
         } catch (ClientExceptionInterface $e) {
-            throw new NetworkException('Failed to get login form', 0, $e);
+            throw new NetworkException('Failed to get login form', $e);
         }
     }
 
@@ -88,7 +88,7 @@ readonly class AuthenticationService
 
             return (string)$response->getBody();
         } catch (ClientExceptionInterface $e) {
-            throw new NetworkException('Failed to send login form', 0, $e);
+            throw new NetworkException('Failed to send login form', $e);
         }
     }
 
@@ -116,7 +116,7 @@ readonly class AuthenticationService
                 throw new InvalidCredentialsException('Invalid credentials');
             }
         } catch (ClientExceptionInterface $e) {
-            throw new NetworkException('Failed to check login', 0, $e);
+            throw new NetworkException('Failed to check login', $e);
         }
     }
 
@@ -127,7 +127,7 @@ readonly class AuthenticationService
             $this->client->request('GET', URL::$closeSession);
             $this->client->request('GET', URL::$logout);
         } catch (ClientExceptionInterface $e) {
-            throw new NetworkException('Failed to logout', 0, $e);
+            throw new NetworkException('Failed to logout', $e);
         }
     }
 }
