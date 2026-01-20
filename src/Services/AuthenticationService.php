@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace PhpCfdi\CsfSatScraper\Services;
 
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
 use PhpCfdi\CsfSatScraper\Exceptions\InvalidCaptchaException;
 use PhpCfdi\CsfSatScraper\Exceptions\InvalidCredentialsException;
 use PhpCfdi\CsfSatScraper\Exceptions\LoginPageNotLoadedException;
 use PhpCfdi\CsfSatScraper\Exceptions\NetworkException;
 use PhpCfdi\CsfSatScraper\URL;
+use Psr\Http\Client\ClientExceptionInterface;
 
 readonly class AuthenticationService
 {
@@ -29,7 +29,7 @@ readonly class AuthenticationService
                     'sid' => 1,
                 ],
             ]);
-        } catch (GuzzleException $e) {
+        } catch (ClientExceptionInterface $e) {
             throw new NetworkException('Failed to initialize login session', 0, $e);
         }
     }
@@ -58,7 +58,7 @@ readonly class AuthenticationService
             }
 
             return $html;
-        } catch (GuzzleException $e) {
+        } catch (ClientExceptionInterface $e) {
             throw new NetworkException('Failed to get login form', 0, $e);
         }
     }
@@ -87,7 +87,7 @@ readonly class AuthenticationService
             ]);
 
             return (string)$response->getBody();
-        } catch (GuzzleException $e) {
+        } catch (ClientExceptionInterface $e) {
             throw new NetworkException('Failed to send login form', 0, $e);
         }
     }
@@ -115,7 +115,7 @@ readonly class AuthenticationService
             if (! str_contains($html, $this->rfc)) {
                 throw new InvalidCredentialsException('Invalid credentials');
             }
-        } catch (GuzzleException $e) {
+        } catch (ClientExceptionInterface $e) {
             throw new NetworkException('Failed to check login', 0, $e);
         }
     }
@@ -126,7 +126,7 @@ readonly class AuthenticationService
             $this->client->request('GET', URL::$logoutSatellite);
             $this->client->request('GET', URL::$closeSession);
             $this->client->request('GET', URL::$logout);
-        } catch (GuzzleException $e) {
+        } catch (ClientExceptionInterface $e) {
             throw new NetworkException('Failed to logout', 0, $e);
         }
     }

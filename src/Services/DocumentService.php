@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace PhpCfdi\CsfSatScraper\Services;
 
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
 use PhpCfdi\CsfSatScraper\Exceptions\NetworkException;
 use PhpCfdi\CsfSatScraper\FormUtils;
 use PhpCfdi\CsfSatScraper\URL;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\StreamInterface;
 
 readonly class DocumentService
@@ -25,7 +25,7 @@ readonly class DocumentService
                 'form_params' => $values,
             ]);
             return (string)$response->getBody();
-        } catch (GuzzleException $e) {
+        } catch (ClientExceptionInterface $e) {
             throw new NetworkException('Failed to send final form', 0, $e);
         }
     }
@@ -35,7 +35,7 @@ readonly class DocumentService
         try {
             $response = $this->client->request('GET', URL::$file);
             return $response->getBody();
-        } catch (GuzzleException $e) {
+        } catch (ClientExceptionInterface $e) {
             throw new NetworkException('Failed to get file content', 0, $e);
         }
     }
