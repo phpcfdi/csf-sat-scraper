@@ -20,13 +20,6 @@ class HttpClientFactory
         return new Client($mergedOptions);
     }
 
-    public static function createWithCookies(?CookieJarInterface $cookieJar = null): ClientInterface
-    {
-        return self::create([
-            RequestOptions::COOKIES => $cookieJar ?? new CookieJar(),
-        ]);
-    }
-
     public static function createWithTimeout(int $timeout = 30, int $connectTimeout = 10): ClientInterface
     {
         return self::create([

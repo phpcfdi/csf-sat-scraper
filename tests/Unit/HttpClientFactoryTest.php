@@ -19,21 +19,6 @@ class HttpClientFactoryTest extends TestCase
         $this->assertInstanceOf(Client::class, $client);
     }
 
-    public function testCreateWithCookiesReturnsClientWithCookieJar(): void
-    {
-        $cookieJar = new CookieJar();
-        $client = HttpClientFactory::createWithCookies($cookieJar);
-
-        $this->assertInstanceOf(Client::class, $client);
-    }
-
-    public function testCreateWithCookiesCreatesNewCookieJarIfNotProvided(): void
-    {
-        $client = HttpClientFactory::createWithCookies();
-
-        $this->assertInstanceOf(Client::class, $client);
-    }
-
     public function testCreateWithTimeoutSetsCustomTimeouts(): void
     {
         $client = HttpClientFactory::createWithTimeout(60, 20);
