@@ -35,7 +35,7 @@ class ScraperTest extends TestCase
         );
 
         $this->assertSame($this->mockClient, $scraper->client);
-        $this->assertSame($this->mockCaptchaResolver, $scraper->captchaService->captchaSolver);
+        $this->assertSame($this->mockCaptchaResolver, $scraper->captchaService->captchaResolver);
         $this->assertSame($this->testRfc, $scraper->authService->rfc);
         $this->assertSame($this->testPassword, $scraper->authService->password);
     }

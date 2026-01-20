@@ -11,7 +11,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 readonly class CaptchaService
 {
-    public function __construct(public CaptchaResolverInterface $captchaSolver)
+    public function __construct(public CaptchaResolverInterface $captchaResolver)
     {
     }
 
@@ -23,7 +23,7 @@ readonly class CaptchaService
             throw new CaptchaSourceNotFoundException('Captcha image not found in HTML');
         }
         $image = CaptchaImage::newFromInlineHtml($captchaImageSrc);
-        $solution = $this->captchaSolver->resolve($image);
+        $solution = $this->captchaResolver->resolve($image);
 
         return $solution->getValue();
     }
