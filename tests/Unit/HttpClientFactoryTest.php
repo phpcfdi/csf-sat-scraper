@@ -15,20 +15,21 @@ class HttpClientFactoryTest extends TestCase
     public function testCreateReturnsClientInstance(): void
     {
         $client = HttpClientFactory::create();
-
         $this->assertInstanceOf(Client::class, $client);
     }
 
     public function testGetDefaultOptionsReturnsCorrectBaseUri(): void
     {
-        $options = HttpClientFactory::getDefaultOptions();
+        $factory = new HttpClientFactory();
+        $options = $factory->getDefaultOptions();
 
         $this->assertEquals('https://login.siat.sat.gob.mx', $options['base_uri']);
     }
 
     public function testGetDefaultOptionsIncludesTimeouts(): void
     {
-        $options = HttpClientFactory::getDefaultOptions();
+        $factory = new HttpClientFactory();
+        $options = $factory->getDefaultOptions();
 
         $this->assertEquals(30, $options[RequestOptions::TIMEOUT]);
         $this->assertEquals(10, $options[RequestOptions::CONNECT_TIMEOUT]);
@@ -36,8 +37,9 @@ class HttpClientFactoryTest extends TestCase
 
     public function testGetDefaultOptionsIncludesRedirectSettings(): void
     {
+        $factory = new HttpClientFactory();
         /** @phpstan-var mixed[]&array{allow_redirects: array{max: int}} $options */
-        $options = HttpClientFactory::getDefaultOptions();
+        $options = $factory->getDefaultOptions();
 
         $this->assertArrayHasKey(RequestOptions::ALLOW_REDIRECTS, $options);
         $this->assertEquals(10, $options[RequestOptions::ALLOW_REDIRECTS]['max']);
@@ -45,7 +47,8 @@ class HttpClientFactoryTest extends TestCase
 
     public function testGetDefaultOptionsIncludesRequiredHeaders(): void
     {
-        $options = HttpClientFactory::getDefaultOptions();
+        $factory = new HttpClientFactory();
+        $options = $factory->getDefaultOptions();
 
         $this->assertArrayHasKey(RequestOptions::HEADERS, $options);
 
@@ -60,7 +63,8 @@ class HttpClientFactoryTest extends TestCase
 
     public function testGetCriticalOptionsReturnsOnlyCriticalSettings(): void
     {
-        $critical = HttpClientFactory::getCriticalOptions();
+        $factory = new HttpClientFactory();
+        $critical = $factory->getCriticalOptions();
 
         $this->assertArrayHasKey('base_uri', $critical);
 
@@ -74,10 +78,11 @@ class HttpClientFactoryTest extends TestCase
         $validOptions = [
             'base_uri' => 'https://login.siat.sat.gob.mx',
             RequestOptions::VERIFY => false,
-            RequestOptions::TIMEOUT => 60, // Can be different
+            RequestOptions::TIMEOUT => 60,
         ];
 
-        $this->assertTrue(HttpClientFactory::validateOptions($validOptions));
+        $factory = new HttpClientFactory($validOptions);
+        $this->assertTrue($factory->validateOptions());
     }
 
     public function testValidateOptionsReturnsFalseForInvalidBaseUri(): void
@@ -86,27 +91,19 @@ class HttpClientFactoryTest extends TestCase
             'base_uri' => 'https://wrong-url.com',
         ];
 
-        $this->assertFalse(HttpClientFactory::validateOptions($invalidOptions));
+        $factory = new HttpClientFactory($invalidOptions);
+        $this->assertFalse($factory->validateOptions());
     }
 
-    public function testValidateOptionsReturnsFalseWhenSSLVerificationEnabled(): void
-    {
-        $invalidOptions = [
-            RequestOptions::VERIFY => true,
-        ];
-
-        $this->assertFalse(HttpClientFactory::validateOptions($invalidOptions));
-    }
-
-    public function testCreateMergesCustomOptionsWithDefaults(): void
+    public function testCreateReplacesCustomOptionsWithDefaults(): void
     {
         $customOptions = [
             RequestOptions::TIMEOUT => 60,
         ];
 
-        $client = HttpClientFactory::create($customOptions);
-
-        $this->assertInstanceOf(Client::class, $client);
+        $factory = new HttpClientFactory($customOptions);
+        $buildOptions = $factory->buildOptions();
+        $this->assertSame($customOptions[RequestOptions::TIMEOUT], $buildOptions[RequestOptions::TIMEOUT]);
     }
 
     public function testCreatePreservesDefaultHeadersWhenCustomHeadersProvided(): void
@@ -117,16 +114,43 @@ class HttpClientFactoryTest extends TestCase
             ],
         ];
 
-        $client = HttpClientFactory::create($customOptions);
-
-        $this->assertInstanceOf(Client::class, $client);
+        $factory = new HttpClientFactory($customOptions);
+        $buildOptions = $factory->buildOptions();
+        $this->assertIsArray($buildOptions[RequestOptions::HEADERS]);
+        $this->assertArrayHasKey('Custom-Header', $buildOptions[RequestOptions::HEADERS]);
+        $this->assertSame(
+            $customOptions[RequestOptions::HEADERS]['Custom-Header'],
+            $buildOptions[RequestOptions::HEADERS]['Custom-Header'],
+        );
     }
 
     public function testGetDefaultOptionsIncludesCookieJar(): void
     {
-        $options = HttpClientFactory::getDefaultOptions();
+        $factory = new HttpClientFactory();
+        $options = $factory->getDefaultOptions();
 
         $this->assertArrayHasKey(RequestOptions::COOKIES, $options);
         $this->assertInstanceOf(CookieJar::class, $options[RequestOptions::COOKIES]);
+    }
+
+    public function testCheckSetterMethods(): void
+    {
+        $factory = new HttpClientFactory();
+        $cookieJar = new CookieJar();
+        $connectTimeout = 50;
+        $timeout = 100;
+        $verify = false;
+
+        $options = $factory
+            ->setConnectTimeout($connectTimeout)
+            ->setTimeout($timeout)
+            ->setVerify($verify)
+            ->setCookieJar($cookieJar)
+            ->buildOptions();
+
+        $this->assertSame($cookieJar, $options[RequestOptions::COOKIES]);
+        $this->assertSame($verify, $options[RequestOptions::VERIFY]);
+        $this->assertSame($connectTimeout, $options[RequestOptions::CONNECT_TIMEOUT]);
+        $this->assertSame($timeout, $options[RequestOptions::TIMEOUT]);
     }
 }
