@@ -20,14 +20,6 @@ class HttpClientFactory
         return new Client($mergedOptions);
     }
 
-    public static function createWithTimeout(int $timeout = 30, int $connectTimeout = 10): ClientInterface
-    {
-        return self::create([
-            RequestOptions::TIMEOUT => $timeout,
-            RequestOptions::CONNECT_TIMEOUT => $connectTimeout,
-        ]);
-    }
-
     /** @phpstan-return mixed[] */
     public static function getDefaultOptions(): array
     {

@@ -19,13 +19,6 @@ class HttpClientFactoryTest extends TestCase
         $this->assertInstanceOf(Client::class, $client);
     }
 
-    public function testCreateWithTimeoutSetsCustomTimeouts(): void
-    {
-        $client = HttpClientFactory::createWithTimeout(60, 20);
-
-        $this->assertInstanceOf(Client::class, $client);
-    }
-
     public function testGetDefaultOptionsReturnsCorrectBaseUri(): void
     {
         $options = HttpClientFactory::getDefaultOptions();
