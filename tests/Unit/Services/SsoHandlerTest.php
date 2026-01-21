@@ -5,27 +5,27 @@ declare(strict_types=1);
 namespace PhpCfdi\CsfSatScraper\Tests\Unit\Services;
 
 use GuzzleHttp\ClientInterface;
-use PhpCfdi\CsfSatScraper\Exceptions\SATException;
-use PhpCfdi\CsfSatScraper\Services\SSOHandler;
+use PhpCfdi\CsfSatScraper\Exceptions\SatException;
+use PhpCfdi\CsfSatScraper\Services\SsoHandler;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
-class SSOHandlerTest extends TestCase
+class SsoHandlerTest extends TestCase
 {
     private ClientInterface&MockObject $mockClient;
 
-    private SSOHandler $service;
+    private SsoHandler $service;
 
     protected function setUp(): void
     {
 
         $this->mockClient = $this->createMock(ClientInterface::class);
-        $this->service = new SSOHandler($this->mockClient);
+        $this->service = new SsoHandler($this->mockClient);
     }
 
-    public function testHandleSSOFormsWithSAMLResponse(): void
+    public function testHandleSsoFormsWithSamlResponse(): void
     {
         $inputHtml = <<<'HTML'
             <!DOCTYPE html>
@@ -93,14 +93,14 @@ class SSOHandlerTest extends TestCase
                 }
             });
 
-        $result = $this->service->handleSSOForms($inputHtml);
+        $result = $this->service->handleSsoForms($inputHtml);
 
         $this->assertSame($finalHtml, $result);
         $this->assertStringContainsString('Portal del SAT', $result);
         $this->assertStringContainsString('Sesión SSO establecida correctamente', $result);
     }
 
-    public function testHandleSSOWorkflowCompleteFlow(): void
+    public function testHandleSsoWorkflowCompleteFlow(): void
     {
         $throwerResponse = <<<'HTML'
             <!DOCTYPE html>
@@ -202,14 +202,14 @@ class SSOHandlerTest extends TestCase
                 $mockResponseFinal,
             );
 
-        $result = $this->service->handleSSOWorkflow();
+        $result = $this->service->handleSsoWorkflow();
 
         $this->assertSame($finalHtml, $result);
         $this->assertStringContainsString('Constancia de Situación Fiscal', $result);
         $this->assertStringContainsString('formReimpAcuse', $result);
     }
 
-    public function testHandleSSOWorkflowThrowsExceptionWhenIframeNotFound(): void
+    public function testHandleSsoWorkflowThrowsExceptionWhenIframeNotFound(): void
     {
         $throwerResponse = '<form action="https://test.com/saml"><input type="hidden" name="SAMLResponse" value="test"/></form>';
 
@@ -249,13 +249,13 @@ class SSOHandlerTest extends TestCase
                 $mockResponseNoIframe,
             );
 
-        $this->expectException(SATException::class);
+        $this->expectException(SatException::class);
         $this->expectExceptionMessage('iframetoload not found in SSO workflow');
 
-        $this->service->handleSSOWorkflow();
+        $this->service->handleSsoWorkflow();
     }
 
-    public function testHandleSSOFormsProcessesSAMLResponseCorrectly(): void
+    public function testHandleSsoFormsProcessesSamlResponseCorrectly(): void
     {
         $samlHtml = <<<'HTML'
             <!DOCTYPE html>
@@ -287,12 +287,12 @@ class SSOHandlerTest extends TestCase
             ->method('request')
             ->willReturnOnConsecutiveCalls($mockResponse1, $mockResponse2);
 
-        $result = $this->service->handleSSOForms($samlHtml);
+        $result = $this->service->handleSsoForms($samlHtml);
 
         $this->assertStringContainsString('SSO Complete', $result);
     }
 
-    public function testHandleSSOFormsExtractsCorrectFormData(): void
+    public function testHandleSsoFormsExtractsCorrectFormData(): void
     {
         $htmlWithMultipleFields = <<<'HTML'
             <!DOCTYPE html>
@@ -327,7 +327,7 @@ class SSOHandlerTest extends TestCase
             ->with('POST', $this->anything(), $this->anything())
             ->willReturnOnConsecutiveCalls($mockResponse1, $mockResponse2);
 
-        $result = $this->service->handleSSOForms($htmlWithMultipleFields);
+        $result = $this->service->handleSsoForms($htmlWithMultipleFields);
 
         $this->assertStringContainsString('Success', $result);
     }

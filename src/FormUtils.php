@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCfdi\CsfSatScraper;
 
-use PhpCfdi\CsfSatScraper\Exceptions\SATException;
+use PhpCfdi\CsfSatScraper\Exceptions\SatException;
 use Symfony\Component\DomCrawler\Crawler;
 
 class FormUtils
@@ -12,7 +12,7 @@ class FormUtils
     public static function extractForm(string $html): FormExtractionResult
     {
         if (! preg_match('/<form[^>]+action="([^"]+)"[^>]*>/i', $html, $m)) {
-            throw new SATException('No encontré el form SAML en la respuesta');
+            throw new SatException('No encontré el form SAML en la respuesta');
         }
 
         $action = html_entity_decode($m[1]);
@@ -34,7 +34,7 @@ class FormUtils
 
     public static function extractFinalForm(string $html): FormExtractionResult
     {
-        $crawler = new Crawler($html, URL::$rfcampc);
+        $crawler = new Crawler($html, Url::$rfcampc);
         $form = $crawler->filter('form#formReimpAcuse')->form();
 
         $actionUrl = $form->getUri();

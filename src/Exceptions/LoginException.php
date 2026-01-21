@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace PhpCfdi\CsfSatScraper\Exceptions;
 
-class LoginException extends SATException
+class LoginException extends SatException
 {
 }

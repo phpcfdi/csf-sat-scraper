@@ -11,7 +11,7 @@ use PhpCfdi\CsfSatScraper\Exceptions\InvalidCredentialsException;
 use PhpCfdi\CsfSatScraper\Exceptions\LoginPageNotLoadedException;
 use PhpCfdi\CsfSatScraper\Exceptions\NetworkException;
 use PhpCfdi\CsfSatScraper\Services\AuthenticationService;
-use PhpCfdi\CsfSatScraper\URL;
+use PhpCfdi\CsfSatScraper\Url;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
@@ -242,9 +242,9 @@ class AuthenticationServiceTest extends TestCase
                 $callCount++;
 
                 $expectedUrls = [
-                    URL::$logoutSatellite,
-                    URL::$closeSession,
-                    URL::$logout,
+                    Url::$logoutSatellite,
+                    Url::$closeSession,
+                    Url::$logout,
                 ];
 
                 $this->assertEquals($expectedUrls[$callCount - 1], $url);

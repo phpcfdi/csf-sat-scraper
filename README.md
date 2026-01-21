@@ -82,7 +82,7 @@ Resuelve el captcha del SAT:
 - Extracción de imagen del HTML.
 - Resolución con el resolvedor configurado.
 
-### `SSOHandler`
+### `SsoHandler`
 
 Gestiona el flujo SSO/SAML:
 

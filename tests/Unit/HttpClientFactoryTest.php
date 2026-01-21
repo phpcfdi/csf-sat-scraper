@@ -8,7 +8,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\RequestOptions;
 use PhpCfdi\CsfSatScraper\HttpClientFactory;
-use PhpCfdi\CsfSatScraper\URL;
+use PhpCfdi\CsfSatScraper\Url;
 use PHPUnit\Framework\TestCase;
 
 class HttpClientFactoryTest extends TestCase
@@ -24,7 +24,7 @@ class HttpClientFactoryTest extends TestCase
         $factory = new HttpClientFactory();
         $options = $factory->getDefaultOptions();
 
-        $this->assertEquals(URL::$base, $options['base_uri']);
+        $this->assertEquals(Url::$base, $options['base_uri']);
     }
 
     public function testGetDefaultOptionsIncludesTimeouts(): void
@@ -77,7 +77,7 @@ class HttpClientFactoryTest extends TestCase
     public function testValidateOptionsReturnsTrueForValidOptions(): void
     {
         $validOptions = [
-            'base_uri' => URL::$base,
+            'base_uri' => Url::$base,
             RequestOptions::VERIFY => false,
             RequestOptions::TIMEOUT => 60,
         ];

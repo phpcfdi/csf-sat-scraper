@@ -9,7 +9,7 @@ use LogicException;
 use PhpCfdi\CsfSatScraper\Services\AuthenticationService;
 use PhpCfdi\CsfSatScraper\Services\CaptchaService;
 use PhpCfdi\CsfSatScraper\Services\DocumentService;
-use PhpCfdi\CsfSatScraper\Services\SSOHandler;
+use PhpCfdi\CsfSatScraper\Services\SsoHandler;
 use PhpCfdi\ImageCaptchaResolver\CaptchaResolverInterface;
 use Stringable;
 
@@ -19,7 +19,7 @@ readonly class Scraper implements ScraperInterface
         public ClientInterface $client,
         public AuthenticationService $authService,
         public CaptchaService $captchaService,
-        public SSOHandler $ssoHandler,
+        public SsoHandler $ssoHandler,
         public DocumentService $documentService,
     ) {
         if ($this->client !== $this->authService->client) {
@@ -43,7 +43,7 @@ readonly class Scraper implements ScraperInterface
             $client,
             new AuthenticationService($client, $rfc, $password),
             new CaptchaService($captchaSolver),
-            new SSOHandler($client),
+            new SsoHandler($client),
             new DocumentService($client),
         );
     }
@@ -56,7 +56,7 @@ readonly class Scraper implements ScraperInterface
         $this->authService->sendLoginForm($captchaValue);
         $this->authService->checkLogin();
 
-        $html = $this->ssoHandler->handleSSOWorkflow();
+        $html = $this->ssoHandler->handleSsoWorkflow();
         $document = $this->documentService->downloadDocument($html);
 
         $this->authService->logout();

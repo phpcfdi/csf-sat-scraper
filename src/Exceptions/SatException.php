@@ -6,6 +6,6 @@ namespace PhpCfdi\CsfSatScraper\Exceptions;
 
 use RuntimeException;
 
-class SATException extends RuntimeException
+class SatException extends RuntimeException
 {
 }

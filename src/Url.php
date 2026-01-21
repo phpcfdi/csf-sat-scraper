@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCfdi\CsfSatScraper;
 
-class URL
+class Url
 {
     public static string $thrower = 'https://wwwmat.sat.gob.mx/app/seg/faces/pages/lanzador.jsf'
         . '?url=/operacion/53027/genera-tu-constancia-de-situacion-fiscal'

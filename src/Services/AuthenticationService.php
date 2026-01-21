@@ -9,7 +9,7 @@ use PhpCfdi\CsfSatScraper\Exceptions\InvalidCaptchaException;
 use PhpCfdi\CsfSatScraper\Exceptions\InvalidCredentialsException;
 use PhpCfdi\CsfSatScraper\Exceptions\LoginPageNotLoadedException;
 use PhpCfdi\CsfSatScraper\Exceptions\NetworkException;
-use PhpCfdi\CsfSatScraper\URL;
+use PhpCfdi\CsfSatScraper\Url;
 use Psr\Http\Client\ClientExceptionInterface;
 
 readonly class AuthenticationService
@@ -46,8 +46,8 @@ readonly class AuthenticationService
                 ],
                 'headers' => [
                     'Content-Type' => 'application/x-www-form-urlencoded',
-                    'Origin' => URL::$base,
-                    'Referer' => URL::$login,
+                    'Origin' => Url::$base,
+                    'Referer' => Url::$login,
                 ],
                 'body' => '',
             ]);
@@ -75,8 +75,8 @@ readonly class AuthenticationService
                 ],
                 'headers' => [
                     'Content-Type' => 'application/x-www-form-urlencoded',
-                    'Origin' => URL::$base,
-                    'Referer' => URL::$login,
+                    'Origin' => Url::$base,
+                    'Referer' => Url::$login,
                 ],
                 'form_params' => [
                     'Ecom_User_ID' => $this->rfc,
@@ -123,9 +123,9 @@ readonly class AuthenticationService
     public function logout(): void
     {
         try {
-            $this->client->request('GET', URL::$logoutSatellite);
-            $this->client->request('GET', URL::$closeSession);
-            $this->client->request('GET', URL::$logout);
+            $this->client->request('GET', Url::$logoutSatellite);
+            $this->client->request('GET', Url::$closeSession);
+            $this->client->request('GET', Url::$logout);
         } catch (ClientExceptionInterface $e) {
             throw new NetworkException('Failed to logout', $e);
         }

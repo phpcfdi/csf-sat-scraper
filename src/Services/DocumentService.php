@@ -7,7 +7,7 @@ namespace PhpCfdi\CsfSatScraper\Services;
 use GuzzleHttp\ClientInterface;
 use PhpCfdi\CsfSatScraper\Exceptions\NetworkException;
 use PhpCfdi\CsfSatScraper\FormUtils;
-use PhpCfdi\CsfSatScraper\URL;
+use PhpCfdi\CsfSatScraper\Url;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\StreamInterface;
 
@@ -33,7 +33,7 @@ readonly class DocumentService
     public function getFileContent(): StreamInterface
     {
         try {
-            $response = $this->client->request('GET', URL::$file);
+            $response = $this->client->request('GET', Url::$file);
             return $response->getBody();
         } catch (ClientExceptionInterface $e) {
             throw new NetworkException('Failed to get file content', $e);

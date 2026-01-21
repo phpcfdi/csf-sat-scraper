@@ -8,7 +8,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
 use PhpCfdi\CsfSatScraper\Exceptions\NetworkException;
 use PhpCfdi\CsfSatScraper\Services\DocumentService;
-use PhpCfdi\CsfSatScraper\URL;
+use PhpCfdi\CsfSatScraper\Url;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
@@ -27,7 +27,7 @@ class DocumentServiceTest extends TestCase
         $this->service = new DocumentService($this->mockClient);
     }
 
-    public function testSendFinalFormWithSATData(): void
+    public function testSendFinalFormWithSatData(): void
     {
         $url = 'https://rfcampc.siat.sat.gob.mx/PTSC/IdcSiat/IdcGeneraConstancia.jsf';
 
@@ -104,7 +104,7 @@ class DocumentServiceTest extends TestCase
         $this->mockClient
             ->expects($this->once())
             ->method('request')
-            ->with('GET', URL::$file)
+            ->with('GET', Url::$file)
             ->willReturn($mockResponse);
 
         $result = (string) $this->service->getFileContent();

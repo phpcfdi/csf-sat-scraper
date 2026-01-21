@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpCfdi\CsfSatScraper\Exceptions;
 
-class LoginPageNotLoadedException extends SATException
+class LoginPageNotLoadedException extends SatException
 {
     protected ?string $html = null;
 

@@ -89,7 +89,7 @@ class HttpClientFactory
     public static function getCriticalOptions(): array
     {
         return [
-            'base_uri' => URL::$base,
+            'base_uri' => Url::$base,
         ];
     }
 
