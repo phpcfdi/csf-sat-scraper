@@ -6,7 +6,7 @@ namespace PhpCfdi\CsfSatScraper\Exceptions;
 
 use RuntimeException;
 
-final class HttpClientInvalidOption extends RuntimeException
+class HttpClientInvalidOption extends RuntimeException
 {
     public function __construct(
         private readonly string $optionName,
