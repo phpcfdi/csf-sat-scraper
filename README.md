@@ -112,9 +112,9 @@ Esta librería se mantendrá compatible con al menos la versión con
 También utilizamos [Versionado Semántico 2.0.0](docs/SEMVER.md) por lo que puedes usar esta librería
 sin temor a romper tu aplicación.
 
-| Versión | PHP Mínima | Nota        |
-|---------|------------|-------------|
-| 1.0.0   | 8.2        | 2026-01-20  |
+| Versión | PHP Mínima         | Nota       |
+|---------|--------------------|------------|
+| 0.1.0   | 8.2, 8.3, 8.4, 8.5 | 2026-01-21 |
 
 ## Contribuciones
 

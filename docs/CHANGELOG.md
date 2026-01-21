@@ -11,6 +11,6 @@ versión, aunque sí su incorporación en la rama principal de trabajo, generalm
 
 ## Listado de cambios
 
-### Versión 0.1.0 2025-12-08
+### Versión 0.1.0 2026-01-21
 
 Primera versión pública disponible.
