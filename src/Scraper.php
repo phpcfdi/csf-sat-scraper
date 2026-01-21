@@ -35,14 +35,14 @@ readonly class Scraper implements ScraperInterface
 
     public static function create(
         ClientInterface $client,
-        CaptchaResolverInterface $captchaSolver,
+        CaptchaResolverInterface $captchaResolver,
         string $rfc,
         string $password,
     ): self {
         return new self(
             $client,
             new AuthenticationService($client, $rfc, $password),
-            new CaptchaService($captchaSolver),
+            new CaptchaService($captchaResolver),
             new SsoHandler($client),
             new DocumentService($client),
         );
