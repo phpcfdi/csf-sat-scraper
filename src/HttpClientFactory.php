@@ -28,7 +28,8 @@ class HttpClientFactory
     {
         $options = $this->buildOptions();
         $this->checkOptions($options);
-        return new Client($options);
+        // the options are merged at runtime from user input; Guzzle 8 types them as a closed array shape
+        return new Client($options); // @phpstan-ignore argument.type
     }
 
     /** @phpstan-return mixed[] $options */

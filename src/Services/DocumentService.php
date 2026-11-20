@@ -17,7 +17,7 @@ readonly class DocumentService
     {
     }
 
-    /** @phpstan-param mixed[] $values */
+    /** @phpstan-param array<string, string> $values */
     public function sendFinalForm(string $url, array $values): string
     {
         try {

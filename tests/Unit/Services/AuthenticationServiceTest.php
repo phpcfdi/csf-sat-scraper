@@ -8,6 +8,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
 use PhpCfdi\CsfSatScraper\Exceptions\InvalidCaptchaException;
 use PhpCfdi\CsfSatScraper\Exceptions\InvalidCredentialsException;
+use PhpCfdi\CsfSatScraper\Exceptions\LoginException;
 use PhpCfdi\CsfSatScraper\Exceptions\LoginPageNotLoadedException;
 use PhpCfdi\CsfSatScraper\Exceptions\NetworkException;
 use PhpCfdi\CsfSatScraper\Services\AuthenticationService;
@@ -190,10 +191,16 @@ class AuthenticationServiceTest extends TestCase
         $service->checkLogin();
     }
 
+    private function loginPageWithError(string $error): string
+    {
+        return '<html><div id="divCaptcha"><img src="data:image/jpeg;base64,AAAA"></div>'
+            . "<script>var error = '" . $error . "';</script></html>";
+    }
+
     public function testCheckLoginThrowsInvalidCaptchaException(): void
     {
         $mockStream = $this->createMock(StreamInterface::class);
-        $mockStream->method('__toString')->willReturn('<html>El captcha es incorrecto</html>');
+        $mockStream->method('__toString')->willReturn($this->loginPageWithError('El captcha es incorrecto'));
 
         $mockResponse = $this->createMock(ResponseInterface::class);
         $mockResponse->method('getBody')->willReturn($mockStream);
@@ -205,7 +212,7 @@ class AuthenticationServiceTest extends TestCase
         $service = new AuthenticationService($this->mockClient, $this->validRfc, $this->validPassword);
 
         $this->expectException(InvalidCaptchaException::class);
-        $this->expectExceptionMessage('Invalid captcha');
+        $this->expectExceptionMessage('El captcha es incorrecto');
 
         $service->checkLogin();
     }
@@ -213,7 +220,7 @@ class AuthenticationServiceTest extends TestCase
     public function testCheckLoginThrowsInvalidCredentialsException(): void
     {
         $mockStream = $this->createMock(StreamInterface::class);
-        $mockStream->method('__toString')->willReturn('<html>Login failed</html>');
+        $mockStream->method('__toString')->willReturn($this->loginPageWithError('RFC o contraseña inválidos'));
 
         $mockResponse = $this->createMock(ResponseInterface::class);
         $mockResponse->method('getBody')->willReturn($mockStream);
@@ -225,9 +232,52 @@ class AuthenticationServiceTest extends TestCase
         $service = new AuthenticationService($this->mockClient, $this->validRfc, $this->validPassword);
 
         $this->expectException(InvalidCredentialsException::class);
-        $this->expectExceptionMessage('Invalid credentials');
+        $this->expectExceptionMessage('RFC o contraseña inválidos');
 
         $service->checkLogin();
+    }
+
+    public function testCheckLoginOnLoginPageWithoutMessageIsNotACaptchaError(): void
+    {
+        // The login page always contains the word "captcha": that alone must not trigger a captcha retry,
+        // because a retried wrong password spends the taxpayer's attempts.
+        $mockStream = $this->createMock(StreamInterface::class);
+        $mockStream->method('__toString')->willReturn($this->loginPageWithError(''));
+
+        $mockResponse = $this->createMock(ResponseInterface::class);
+        $mockResponse->method('getBody')->willReturn($mockStream);
+
+        $this->mockClient
+            ->method('request')
+            ->willReturn($mockResponse);
+
+        $service = new AuthenticationService($this->mockClient, $this->validRfc, $this->validPassword);
+
+        try {
+            $service->checkLogin();
+            $this->fail('An unconfirmed login must throw');
+        } catch (LoginException $exception) {
+            $this->assertNotInstanceOf(InvalidCaptchaException::class, $exception);
+            $this->assertNotInstanceOf(InvalidCredentialsException::class, $exception);
+        }
+    }
+
+    public function testExtractLoginError(): void
+    {
+        $this->assertNull(AuthenticationService::extractLoginError('<script>var error = \'\';</script>'));
+        $this->assertNull(AuthenticationService::extractLoginError('<html>no script</html>'));
+        $this->assertSame(
+            "Contraseña con 'comillas'",
+            AuthenticationService::extractLoginError("<script>var error = 'Contrase&ntilde;a con \\'comillas\\'';</script>"),
+        );
+    }
+
+    public function testCheckLoginResponseWithoutErrorDoesNothing(): void
+    {
+        $service = new AuthenticationService($this->mockClient, $this->validRfc, $this->validPassword);
+        $service->checkLoginResponse($this->loginPageWithError(''));
+
+        $this->assertTrue(true); /** @phpstan-ignore-line method.alreadyNarrowedType */
     }
 
     public function testLogoutSuccess(): void
